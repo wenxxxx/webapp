@@ -1,4 +1,5 @@
 import pickle
+import numpy as np
 import gensim
 import pandas as pd
 import streamlit as st
