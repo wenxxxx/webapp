@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from sklearn.preprocessing import MultiLabelBinarizer
 from gensim.utils import simple_preprocess
 from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
 import tensorflow_hub as hub
 
 # Define the Streamlit app
@@ -16,7 +17,7 @@ use = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 y = [['android', 'c', 'c#', 'c++', 'css', 'html', 'ios', 'java', 'javascript', 'jquery', 'net', 'php', 'python', 'r']]
 mlb = MultiLabelBinarizer()
 y_ = mlb.fit_transform(y)
-
+vectorizer = TfidfVectorizer()
 texte = st.text_area('Enter some text here')
 
 if st.button('Predict the text'):
@@ -25,6 +26,8 @@ if st.button('Predict the text'):
     stop_words = set(stopwords.words('english'))
     tokens = [token for token in tokens if token not in stop_words]
     X = [" ".join(tokens)]
+    vectorizer.fit(X)
+    #X_vec = vectorizer.transform(X)
     X_emb = use(X)
     # importer le modele
     model = pickle.load(open('../pythonProject3/svc.pkl', 'rb'))
