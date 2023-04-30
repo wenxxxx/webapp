@@ -30,7 +30,7 @@ if st.button('Predict the text'):
     X_vec = vectorizer.transform(X)
     #X_emb = use(X)
     # importer le modele
-    model = pickle.load(open('../pythonProject3/svc_v.pkl', 'rb'))
+    model = pickle.load(open('../Web_app/svc_v.pkl', 'rb'))
     prediction = model.predict(X_vec)
     tags = mlb.inverse_transform(prediction)
     df_pred = pd.DataFrame(tags)
