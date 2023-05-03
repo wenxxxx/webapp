@@ -7,6 +7,9 @@ from gensim.utils import simple_preprocess
 from nltk.corpus import stopwords
 import tensorflow_hub as hub
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 # Define the Streamlit app
 st.title('Stack Overflow Question Tagger')
 
