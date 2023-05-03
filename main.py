@@ -20,7 +20,7 @@ st.title('Stack Overflow Question Tagger')
 y = [['android', 'c', 'c#', 'c++', 'css', 'html', 'ios', 'java', 'javascript', 'jquery', 'net', 'php', 'python', 'r']]
 mlb = MultiLabelBinarizer()
 y_ = mlb.fit_transform(y)
-vec = pickle.load(open('vec.pkl', 'rb'))
+vec = pickle.load(open('https://github.com/wenxxxx/webapp/blob/methode_Tfdf/vec.pkl', 'rb'))
 texte = st.text_area('Enter some text here')
 data ={'body':texte}
 df =pd.DataFrame(data,index=[0])
@@ -31,7 +31,7 @@ if st.button('Predict the text'):
     X = df['token'] .apply(lambda x: " ".join(x))
     X_vec = vec.transform(X)
     # importer le modele
-    model = pickle.load(open('svc_v.pkl', 'rb'))
+    model = pickle.load(open('https://github.com/wenxxxx/webapp/blob/methode_Tfdf/svc_v.pkl', 'rb'))
     prediction = model.predict(X_vec)
     tags = mlb.inverse_transform(prediction)
     df_pred = pd.DataFrame(tags)
