@@ -1,5 +1,5 @@
 import pickle
-import requests
+#import requests
 import numpy as np
 import gensim
 import pandas as pd
@@ -22,22 +22,7 @@ y = [['android', 'c', 'c#', 'c++', 'css', 'html', 'ios', 'java', 'javascript', '
 mlb = MultiLabelBinarizer()
 y_ = mlb.fit_transform(y)
 
-url = 'https://github.com/wenxxxx/webapp/blob/methode_Tfdf/vec.pkl'
-
-# Récupérer le fichier model.pkl depuis Github
-response = requests.get(url)
-
-# Charger le modèle à partir du fichier 
-vec = pickle.loads(response.content)
-#vec = pickle.load(open('methode_Tfdf/vec.pkl', 'rb'))
-
-url2 = 'https://github.com/wenxxxx/webapp/blob/methode_Tfdf/svc_v.pkl'
-
-# Récupérer le fichier model.pkl depuis Github
-response2 = requests.get(url2)
-
-# Charger le modèle à partir du fichier 
-model = pickle.loads(response2.content)
+vec = pickle.load(open('../webapp/vec.pkl', 'rb'))
 
 texte = st.text_area('Enter some text here')
 data ={'body':texte}
@@ -49,7 +34,7 @@ if st.button('Predict the text'):
     X = df['token'] .apply(lambda x: " ".join(x))
     X_vec = vec.transform(X)
     # importer le modele
-    # model = pickle.load(open('methode_Tfdf/svc_v.pkl', 'rb'))
+    model = pickle.load(open('../pythonProject3/svc_v.pkl', 'rb'))
     prediction = model.predict(X_vec)
     tags = mlb.inverse_transform(prediction)
     df_pred = pd.DataFrame(tags)
