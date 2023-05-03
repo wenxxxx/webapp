@@ -22,11 +22,13 @@ mlb = MultiLabelBinarizer()
 y_ = mlb.fit_transform(y)
 vec = pickle.load(open('../webapp/vec.pkl', 'rb'))
 texte = st.text_area('Enter some text here')
+data ={'body':texte}
+df =pd.DataFrame(data,index=[0])
 
 if st.button('Predict the text'):
-    soup = texte.apply(lambda x: BeautifulSoup(x, 'html.parser').get_text())
-    tokens = soup.apply(lambda x:preprocess(x))
-    X = tokens.apply(lambda x: " ".join(x))
+    df['soup'] = df['body'].apply(lambda x: BeautifulSoup(x, 'html.parser').get_text())
+    df['token'] = df['soup'].apply(lambda x:preprocess(x))
+    X = df['token'] .apply(lambda x: " ".join(x))
     X_vec = vec.transform(X)
     # importer le modele
     model = pickle.load(open('../Web_app/svc_v.pkl', 'rb'))
