@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 from bs4 import BeautifulSoup
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.feature_extraction.text import TfidfVectorizer
+#from sklearn.feature_extraction.text import TfidfVectorizer
 
 def preprocess(text):
     result=[]
