@@ -22,7 +22,13 @@ y = [['android', 'c', 'c#', 'c++', 'css', 'html', 'ios', 'java', 'javascript', '
 mlb = MultiLabelBinarizer()
 y_ = mlb.fit_transform(y)
 
-vec = pickle.load(open('../webapp/vec.pkl', 'rb'))
+#vec = pickle.load(open('../webapp/vec.pkl', 'rb'))
+
+with open('vec.pkl', 'rb') as f:
+    model_vec = pickle.load(f)
+    
+with open('svc_v.pkl', 'rb') as f:
+    model_svc = pickle.load(f)
 
 texte = st.text_area('Enter some text here')
 data ={'body':texte}
@@ -32,10 +38,10 @@ if st.button('Predict the text'):
     df['soup'] = df['body'].apply(lambda x: BeautifulSoup(x, 'html.parser').get_text())
     df['token'] = df['soup'].apply(lambda x:preprocess(x))
     X = df['token'] .apply(lambda x: " ".join(x))
-    X_vec = vec.transform(X)
+    X_vec = model_vec.transform(X)
     # importer le modele
     model = pickle.load(open('../webapp/svc_v.pkl', 'rb'))
-    prediction = model.predict(X_vec)
+    prediction = model_svc.predict(X_vec)
     tags = mlb.inverse_transform(prediction)
     df_pred = pd.DataFrame(tags)
     st.write(df_pred)
