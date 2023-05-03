@@ -34,7 +34,7 @@ if st.button('Predict the text'):
     X = df['token'] .apply(lambda x: " ".join(x))
     X_vec = vec.transform(X)
     # importer le modele
-    model = pickle.load(open('../pythonProject3/svc_v.pkl', 'rb'))
+    model = pickle.load(open('../webapp/svc_v.pkl', 'rb'))
     prediction = model.predict(X_vec)
     tags = mlb.inverse_transform(prediction)
     df_pred = pd.DataFrame(tags)
